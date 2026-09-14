@@ -52,3 +52,169 @@ body {
   background: var(--color-accent);
   border-radius: 2px;
 }
+
+/* ── Boot-Szene: Wasser, Gischt und Boot ── */
+
+.boat-sea {
+  background: radial-gradient(
+    120% 85% at 50% 26%,
+    #114472 0%,
+    #0a2e52 40%,
+    #051a2e 72%,
+    #02101c 100%
+  );
+}
+
+@keyframes drift-surface {
+  to {
+    transform: translateY(400px);
+  }
+}
+
+@keyframes drift-droplets {
+  to {
+    transform: translateY(300px);
+  }
+}
+
+/* Zwei versetzte Kopien blenden ineinander, damit die Schaumtextur
+   beim Zurückspringen keinen sichtbaren Schnitt zeigt. */
+@keyframes foam-cycle {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(280px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(560px);
+    opacity: 0;
+  }
+}
+
+@keyframes bob-boat {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(1.2px, -3px) rotate(0.5deg);
+  }
+  50% {
+    transform: translate(0, 1.5px) rotate(0deg);
+  }
+  75% {
+    transform: translate(-1.2px, -2.5px) rotate(-0.5deg);
+  }
+}
+
+@keyframes pulse-spray {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.58;
+    transform: scaleY(1.12);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.drift-surface {
+  animation: drift-surface 4s linear infinite;
+  will-change: transform;
+}
+
+.drift-droplets {
+  animation: drift-droplets 1.1s linear infinite;
+  will-change: transform;
+}
+
+.foam-scroll-a,
+.foam-scroll-b {
+  animation: foam-cycle 2.4s linear infinite;
+  will-change: transform, opacity;
+}
+
+.foam-scroll-b {
+  animation-delay: -1.2s;
+}
+
+.foam-scroll-fast-a,
+.foam-scroll-fast-b {
+  animation: foam-cycle 1.4s linear infinite;
+  will-change: transform, opacity;
+}
+
+.foam-scroll-fast-b {
+  animation-delay: -0.7s;
+}
+
+.bob-boat {
+  animation: bob-boat 5s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.pulse-spray {
+  animation: pulse-spray 1.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.fade-up {
+  animation: fade-up 0.9s ease-out both;
+}
+
+.float-slow {
+  animation: float-slow 7s ease-in-out 0.9s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift-surface,
+  .drift-droplets,
+  .foam-scroll-a,
+  .foam-scroll-b,
+  .foam-scroll-fast-a,
+  .foam-scroll-fast-b,
+  .bob-boat,
+  .pulse-spray,
+  .float-slow,
+  .shimmer-text {
+    animation: none;
+  }
+
+  .foam-scroll-a,
+  .foam-scroll-fast-a {
+    opacity: 1;
+  }
+
+  .foam-scroll-b,
+  .foam-scroll-fast-b {
+    opacity: 0;
+  }
+}
